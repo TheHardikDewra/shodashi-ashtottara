@@ -1,0 +1,316 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Interactive guide to Sri Shodashi Ashtottara Shatanama Stotram - 108 sacred names of Tripura Sundari from the Brahmayāmala Tantra">
+  <meta name="theme-color" content="#0f0f0f">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black">
+  <meta property="og:title" content="Sri Shodashi Ashtottara Shatanama Stotram">
+  <meta property="og:description" content="108 sacred names of Goddess Shodashi (Tripura Sundari) from the Brahmayāmala Tantra. Sanskrit, IAST, meanings, audio, sadhana tracker.">
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://shodashi-ashtottara.vercel.app/">
+  <meta name="twitter:card" content="summary">
+  <meta name="twitter:title" content="Sri Shodashi Ashtottara Shatanama Stotram">
+  <meta name="twitter:description" content="108 sacred names of Goddess Shodashi.">
+  <title>Sri Shodashi Ashtottara Shatanama Stotram</title>
+  <link rel="manifest" href="manifest.json">
+  <link rel="icon" href="icon.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="style.css">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Geist:wght@400;500;600;700&family=Inter:wght@400;500;600;700&family=Noto+Sans+Devanagari:wght@400;500;600;700&family=Tiro+Devanagari+Sanskrit&display=swap" rel="stylesheet">
+</head>
+<body>
+  <header class="site-header">
+    <div class="header-title">
+      <h1 class="title-sanskrit">श्रीषोडशीअष्टोत्तरशतनामस्तोत्रम्</h1>
+      <p class="title-english">Sri Shodashi Ashtottara Shatanama Stotram</p>
+      <div class="header-controls">
+        <button class="theme-btn" id="theme-toggle" aria-label="Toggle theme">System</button>
+        <div class="font-controls" id="font-controls"></div>
+      </div>
+    </div>
+    <nav class="nav-tabs" role="tablist">
+      <a href="#home" class="nav-tab active" role="tab" data-view="home">Home</a>
+      <a href="#verses" class="nav-tab" role="tab" data-view="verses">Verses</a>
+      <a href="#names" class="nav-tab" role="tab" data-view="names">Names</a>
+      <a href="#practice" class="nav-tab" role="tab" data-view="practice">Practice</a>
+      <a href="#chant" class="nav-tab" role="tab" data-view="chant">Chant</a>
+    </nav>
+  </header>
+
+  <main id="app">
+    <!-- Home View -->
+    <section id="view-home" class="view">
+      <div class="welcome-section">
+        <p class="welcome-text">The Sri Shodashi Ashtottara Shatanama Stotram is a sacred 108-name hymn to Goddess Shodashi (Tripura Sundari), preserved in the Pūrvakhaṇḍa of the Brahmayāmala Tantra. It is a dialogue in which Lord Brahmā reveals the 108 names to the sage Bhṛgu, declaring them to be extracted from the thousand names of Sundarī - <em>guhyād guhyataraṃ guhyaṃ</em> - secret, more secret than the secret, the very heart of secrecy. This is the same stotra you hear playing in <strong>Lalita Maa Tripura Sundari's world inside the Tantra Sadhana app</strong>.</p>
+      </div>
+
+      <div class="stats-grid">
+        <div class="stat-card">
+          <span class="stat-number" id="stat-names">108</span>
+          <span class="stat-label">Divine Names</span>
+        </div>
+        <div class="stat-card">
+          <span class="stat-number">17</span>
+          <span class="stat-label">Verses with Names</span>
+        </div>
+        <div class="stat-card">
+          <span class="stat-number">3</span>
+          <span class="stat-label">Phalashruti Verses</span>
+        </div>
+        <div class="stat-card">
+          <span class="stat-number" id="stat-learned">0</span>
+          <span class="stat-label">Names Learned</span>
+        </div>
+      </div>
+
+      <div class="sadhana-section">
+        <h2 class="section-title">Sadhana Tracker</h2>
+        <div class="sadhana-card">
+          <div class="sadhana-stats">
+            <div class="sadhana-stat">
+              <span class="sadhana-stat-number" id="sadhana-total">0</span>
+              <span class="sadhana-stat-label">Total Recitations</span>
+            </div>
+            <div class="sadhana-stat">
+              <span class="sadhana-stat-number" id="sadhana-streak">0</span>
+              <span class="sadhana-stat-label">Day Streak</span>
+            </div>
+            <div class="sadhana-stat">
+              <span class="sadhana-stat-number" id="sadhana-month">0</span>
+              <span class="sadhana-stat-label">This Month</span>
+            </div>
+          </div>
+          <div class="sadhana-actions">
+            <button class="sadhana-log-btn" id="sadhana-log">Log Recitation</button>
+            <div class="sadhana-last" id="sadhana-last"></div>
+          </div>
+        </div>
+      </div>
+
+      <div class="notd-section">
+        <h2 class="section-title">Name of the Day</h2>
+        <div class="notd-card" id="name-of-day">
+          <!-- Filled by JS -->
+        </div>
+      </div>
+
+      <div class="dhyana-section">
+        <button class="dhyana-toggle" id="dhyana-toggle" aria-expanded="false" aria-controls="dhyana-content">
+          <h2 class="section-title">Framing Verses (Bhṛgu &amp; Brahmā)</h2>
+          <span class="toggle-icon" id="toggle-icon">+</span>
+        </button>
+        <div class="dhyana-content" id="dhyana-content" hidden>
+          <!-- Filled by JS -->
+        </div>
+      </div>
+
+      <div class="phala-shruti-section">
+        <button class="phala-shruti-toggle" id="phala-shruti-toggle" aria-expanded="false" aria-controls="phala-shruti-content">
+          <h2 class="section-title">Phala Śruti</h2>
+          <span class="toggle-icon" id="phala-shruti-toggle-icon">+</span>
+        </button>
+        <div class="phala-shruti-content" id="phala-shruti-content" hidden>
+          <!-- Filled by JS -->
+        </div>
+      </div>
+
+      <div class="audio-section">
+        <h2 class="section-title">Chanting Audio</h2>
+        <div class="audio-links">
+          <a href="https://www.youtube.com/results?search_query=shodashi+ashtottara+shatanama+stotram" target="_blank" rel="noopener" class="audio-link">
+            <span class="audio-title">Search YouTube for traditional renditions</span>
+            <span class="audio-artist">Multiple recordings available</span>
+          </a>
+          <a href="https://tantrasadhana.app/" target="_blank" rel="noopener" class="audio-link">
+            <span class="audio-title">Tantra Sadhana App - Lalita Tripura Sundari World</span>
+            <span class="audio-artist">This stotra plays as the ambient devotional in Devi's world</span>
+          </a>
+        </div>
+      </div>
+
+      <div class="quick-actions">
+        <a href="#verses" class="action-btn">Read Verse-by-Verse</a>
+        <a href="#names" class="action-btn">Browse 108 Names</a>
+        <a href="#practice" class="action-btn">Start Practice</a>
+        <a href="#chant" class="action-btn">Chant Mode</a>
+      </div>
+    </section>
+
+    <!-- Names View -->
+    <section id="view-names" class="view" hidden>
+      <div class="names-controls">
+        <div class="search-bar">
+          <input type="text" id="names-search" placeholder="Search by name, meaning, or number..." autocomplete="off" spellcheck="false">
+        </div>
+        <div class="filter-row">
+          <select id="range-filter" aria-label="Filter by range">
+            <option value="all">All 108 Names</option>
+            <optgroup label="By Verse">
+              <option value="verse-3">Verse 3 (Names 1-10)</option>
+              <option value="verse-4">Verse 4 (Names 11-18)</option>
+              <option value="verse-5">Verse 5 (Names 19-25)</option>
+              <option value="verse-6">Verse 6 (Names 26-31)</option>
+              <option value="verse-7">Verse 7 (Names 32-37)</option>
+              <option value="verse-8">Verse 8 (Names 38-43)</option>
+              <option value="verse-9">Verse 9 (Names 44-50)</option>
+              <option value="verse-10">Verse 10 (Names 51-60)</option>
+              <option value="verse-11">Verse 11 (Names 61-68)</option>
+              <option value="verse-12">Verse 12 (Names 69-75)</option>
+              <option value="verse-13">Verse 13 (Names 76-81)</option>
+              <option value="verse-14">Verse 14 (Names 82-91)</option>
+              <option value="verse-15">Verse 15 (Names 92-99)</option>
+              <option value="verse-16">Verse 16 (Names 100-104)</option>
+              <option value="verse-17">Verse 17 (Names 105-108)</option>
+            </optgroup>
+            <optgroup label="By Range">
+              <option value="num-1-25">Names 1-25</option>
+              <option value="num-26-50">Names 26-50</option>
+              <option value="num-51-75">Names 51-75</option>
+              <option value="num-76-108">Names 76-108</option>
+            </optgroup>
+          </select>
+          <select id="status-filter" aria-label="Filter by status">
+            <option value="all">All</option>
+            <option value="learned">Learned</option>
+            <option value="unlearned">Not Learned</option>
+          </select>
+        </div>
+        <div class="names-counter" id="names-counter">108 names</div>
+      </div>
+      <div class="names-grid" id="names-grid">
+        <!-- Filled by JS -->
+      </div>
+      <div class="empty-state" id="names-empty" hidden>
+        <p>No names match your search.</p>
+      </div>
+    </section>
+
+    <!-- Verses View -->
+    <section id="view-verses" class="view" hidden>
+      <div class="verse-nav">
+        <button class="verse-nav-btn" id="verse-prev" aria-label="Previous verse">Prev</button>
+        <div class="verse-selector">
+          <label for="verse-jump">Verse</label>
+          <input type="number" id="verse-jump" min="1" max="20" value="1">
+          <span class="verse-total">of 20</span>
+        </div>
+        <button class="verse-nav-btn" id="verse-next" aria-label="Next verse">Next</button>
+      </div>
+      <div class="verse-progress-bar">
+        <div class="verse-progress-fill" id="verse-progress-fill"></div>
+      </div>
+      <div class="verse-progress-text" id="verse-progress-text">0 of 20 verses completed</div>
+      <div class="verse-display" id="verse-display">
+        <!-- Filled by JS -->
+      </div>
+    </section>
+
+    <!-- Practice View -->
+    <section id="view-practice" class="view" hidden>
+      <div class="practice-controls">
+        <div class="practice-mode">
+          <button class="mode-btn active" id="mode-s2m" data-mode="s2m">Sanskrit to Meaning</button>
+          <button class="mode-btn" id="mode-m2s" data-mode="m2s">Meaning to Sanskrit</button>
+        </div>
+        <div class="practice-scope">
+          <select id="practice-scope" aria-label="Practice scope">
+            <option value="all">All 108 Names</option>
+            <option value="unlearned">Unlearned Only</option>
+            <option value="due">Due Today (SRS)</option>
+            <optgroup label="By Verse">
+              <option value="verse-3">Verse 3 (Names 1-10)</option>
+              <option value="verse-4">Verse 4 (Names 11-18)</option>
+              <option value="verse-5">Verse 5 (Names 19-25)</option>
+              <option value="verse-6">Verse 6 (Names 26-31)</option>
+              <option value="verse-7">Verse 7 (Names 32-37)</option>
+              <option value="verse-8">Verse 8 (Names 38-43)</option>
+              <option value="verse-9">Verse 9 (Names 44-50)</option>
+              <option value="verse-10">Verse 10 (Names 51-60)</option>
+              <option value="verse-11">Verse 11 (Names 61-68)</option>
+              <option value="verse-12">Verse 12 (Names 69-75)</option>
+              <option value="verse-13">Verse 13 (Names 76-81)</option>
+              <option value="verse-14">Verse 14 (Names 82-91)</option>
+              <option value="verse-15">Verse 15 (Names 92-99)</option>
+              <option value="verse-16">Verse 16 (Names 100-104)</option>
+              <option value="verse-17">Verse 17 (Names 105-108)</option>
+            </optgroup>
+          </select>
+        </div>
+      </div>
+      <div class="practice-score" id="practice-score">
+        <span id="score-got">0</span> got it &middot; <span id="score-review">0</span> to review
+      </div>
+      <div class="flashcard-container">
+        <div class="flashcard" id="flashcard" role="button" tabindex="0" aria-label="Click to flip card">
+          <div class="flashcard-front" id="flashcard-front">
+            <!-- Filled by JS -->
+          </div>
+          <div class="flashcard-back" id="flashcard-back">
+            <!-- Filled by JS -->
+          </div>
+        </div>
+      </div>
+      <p class="flip-hint" id="flip-hint">Click the card to reveal</p>
+      <div class="practice-actions" id="practice-actions" hidden>
+        <button class="practice-btn review-btn" id="btn-review">Review Again</button>
+        <button class="practice-btn got-btn" id="btn-got">Got It</button>
+      </div>
+      <div class="practice-empty" id="practice-empty" hidden>
+        <p>No names available for this selection. Try a different scope.</p>
+      </div>
+    </section>
+
+    <!-- Chant View -->
+    <section id="view-chant" class="view" hidden>
+      <div class="chant-controls">
+        <button class="chant-btn" id="chant-fullscreen">Full Screen</button>
+        <div class="chant-verse-info" id="chant-verse-info">Verse 1 of 20</div>
+        <button class="chant-btn" id="chant-settings-toggle">Settings</button>
+      </div>
+      <div class="chant-settings" id="chant-settings" hidden>
+        <label>Start from verse: <input type="number" id="chant-start" min="1" max="20" value="1"></label>
+        <label>Auto-advance: <input type="checkbox" id="chant-auto"> <span id="chant-auto-label">Off</span></label>
+        <label>Speed: <input type="range" id="chant-speed" min="3" max="15" value="8"> <span id="chant-speed-label">8s</span></label>
+        <label>Show transliteration: <input type="checkbox" id="chant-show-translit" checked></label>
+        <label>Show meanings: <input type="checkbox" id="chant-show-meaning"></label>
+      </div>
+      <div class="chant-stage" id="chant-stage">
+        <div class="chant-verse-number" id="chant-verse-num"></div>
+        <div class="chant-sanskrit" id="chant-sanskrit"></div>
+        <div class="chant-transliteration" id="chant-translit"></div>
+        <div class="chant-meanings" id="chant-meanings"></div>
+      </div>
+      <div class="chant-nav">
+        <button class="chant-nav-btn" id="chant-prev">Prev</button>
+        <div class="chant-progress-dots" id="chant-dots"></div>
+        <button class="chant-nav-btn" id="chant-next">Next</button>
+      </div>
+    </section>
+  </main>
+
+  <footer class="site-footer">
+    <p class="footer-dedication">A devotional offering to Maa Shodashi Tripura Sundari - Om Aim Hrim Shrim</p>
+    <p class="footer-source">Sanskrit text: <a href="https://sanskritdocuments.org/doc_devii/ShoDashIshatanAmastotram.html" target="_blank" rel="noopener">sanskritdocuments.org</a> · Source: Brahmayāmala Tantra, Pūrvakhaṇḍa</p>
+    <div class="data-controls">
+      <button class="data-btn" id="export-data">Export Progress</button>
+      <label class="data-btn import-label">
+        Import Progress
+        <input type="file" id="import-data" accept=".json" hidden>
+      </label>
+    </div>
+    <p class="footer-repo"><a href="https://github.com/TheHardikDewra/shodashi-ashtottara" target="_blank" rel="noopener">GitHub</a> · <a href="https://lalita-trishati.vercel.app" target="_blank" rel="noopener">Sister: Lalita Trishati</a> · <a href="https://lalita-sahasranama.vercel.app" target="_blank" rel="noopener">Lalita Sahasranama</a> · <a href="https://shri-rudram.vercel.app" target="_blank" rel="noopener">Shri Rudram</a></p>
+  </footer>
+
+  <script src="data.js"></script>
+  <script src="app.js"></script>
+  <script>
+  if ('serviceWorker' in navigator) {
+    navigator.serviceWorker.register('sw.js');
+  }
+  </script>
+</body>
+</html>
