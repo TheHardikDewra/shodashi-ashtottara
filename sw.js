@@ -1,4 +1,4 @@
-const CACHE_NAME = 'shodashi-v3';
+const CACHE_NAME = 'shodashi-v4';
 const CORE_ASSETS = [
   './',
   './index.html',
