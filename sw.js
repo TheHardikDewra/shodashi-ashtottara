@@ -1,4 +1,4 @@
-const CACHE_NAME = 'shodashi-v5';
+const CACHE_NAME = 'shodashi-v6';
 const CORE_ASSETS = [
   './',
   './index.html',
@@ -34,6 +34,8 @@ self.addEventListener('fetch', (event) => {
   // the gstatic SDK go straight to the network untouched.
   if (event.request.method !== 'GET') return;
   if (new URL(event.request.url).origin !== self.location.origin) return;
+  // Audio streams with Range requests; let the browser fetch it directly.
+  if (new URL(event.request.url).pathname.startsWith('/audio/')) return;
   event.respondWith(
     caches.match(event.request).then((cached) => cached || fetch(event.request))
   );
